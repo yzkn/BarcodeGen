@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- ＵＴＦ８ -->
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>BarcodeGen</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous" />
+</head>
+
+<body class="text-center">
+    <main role="main">
+        <form class="dataform">
+            <label for="data" class="sr-only">Data</label>
+            <input type="text" id="data" class="form-control" placeholder="Data" required autofocus>
+        </form>
+        <section class="jumbotron text-center">
+            <div class="container">
+                <canvas id="qr"></canvas>
+            </div>
+        </section>
+        <button class="btn btn-lg btn-primary btn-block" type="button" id="download">Download</button>
+    </main>
+
+    <script src="qrious.min.js"></script>
+    <script>
+        (function () {
+            document.getElementById('data').addEventListener('change', function () {
+                if (isHankaku(document.getElementById('data').value)) {
+                    var qr = new QRious({
+                        element: document.getElementById('qr'),
+                        value: document.getElementById('data').value
+                    });
+                    document.getElementById('download').innerText = 'Download: "' + document.getElementById(
+                        'data').value + '"';
+                }
+            });
+
+            document.getElementById('download').addEventListener('click', function () {
+                saveCanvas(document.getElementById("qr"));
+            });
+
+            var qr = new QRious({
+                element: document.getElementById('qr'),
+                value: 'BarcodeGen'
+            });
+        })();
+
+        function saveCanvas(canvas) {
+            if (canvas.getContext) {
+                var fileNameBase = 'qrcodegen';
+                var imageType = 'image/png';
+                var fileName = fileNameBase + '.png';
+                var blob = Base64toBlob(canvas.toDataURL(imageType));
+                saveBlob(blob, fileName);
+            }
+        }
+
+        function Base64toBlob(base64) {
+            var mimeAndData = base64.split(',');
+            var data = atob(mimeAndData[1]);
+            var mime = mimeAndData[0].split(':')[1].split(';')[0];
+            var buf = new Uint8Array(data.length);
+            for (var i = 0; i < data.length; i++) {
+                buf[i] = data.charCodeAt(i);
+            }
+            var blob = new Blob([buf], {
+                type: mime
+            });
+            return blob;
+        }
+
+        function saveBlob(blob, fileName) {
+            var url = (window.URL || window.webkitURL);
+            var dataUrl = url.createObjectURL(blob);
+            var event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            var a = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+            a.href = dataUrl;
+            a.download = fileName;
+            a.dispatchEvent(event);
+        }
+
+        function isHankaku(value) {
+            return !value.match(/[^\x01-\x7E]/) || !value.match(/[^\uFF65-\uFF9F]/);
+        }
+    </script>
+</body>
+
+</html>
