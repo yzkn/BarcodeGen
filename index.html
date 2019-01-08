@@ -27,7 +27,8 @@
         <button class="btn btn-lg btn-primary btn-block" type="button" id="download">Download</button>
     </main>
 
-    <script src="qrious.min.js"></script>
+    <script src="js/qrious.min.js"></script>
+    <script src="js/encoding.min.js"></script>
     <script>
         (function () {
             document.getElementById('data').addEventListener('change', function () {
@@ -35,6 +36,16 @@
                     var qr = new QRious({
                         element: document.getElementById('qr'),
                         value: document.getElementById('data').value
+                    });
+                    document.getElementById('download').innerText = 'Download: "' + document.getElementById(
+                        'data').value + '"';
+                } else {
+                    // from UTF-8 to Shift_JIS
+                    var sjisData = Encoding.convert(document.getElementById('data').value, 'SJIS', 'UTF8');
+
+                    var qr = new QRious({
+                        element: document.getElementById('qr'),
+                        value: sjisData
                     });
                     document.getElementById('download').innerText = 'Download: "' + document.getElementById(
                         'data').value + '"';
