@@ -1,0 +1,40 @@
+{"dir" : "ltr",
+    "lang" : "Japanese",
+    "name" : "BarcodeGen",
+    "scope" : "/BarcodeGen/",
+    "display" : "standalone",
+    "start_url" : "https://ya-androidapp.github.io/BarcodeGen/",
+    "short_name" : "BarcodeGen",
+    "theme_color" : "transparent",
+    "description" : "Generating QR codes",
+    "orientation" : "any",
+    "background_color" : "transparent",
+    "related_applications" : "",
+    "prefer_related_applications" : "false",
+    "generated" : "true",
+    "icons" : [
+        {
+            "src": "pwa-images/pwa-48.png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "pwa-images/pwa-72.png",
+            "sizes": "72x72"
+        },
+        {
+            "src": "pwa-images/pwa-96.png",
+            "sizes": "96x96"
+        },
+        {
+            "src": "pwa-images/pwa-144.png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "pwa-images/pwa-192.png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "pwa-images/pwa-512.png",
+            "sizes": "512x512"
+        },
+    ]}
