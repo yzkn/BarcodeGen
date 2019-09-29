@@ -10,8 +10,8 @@
     <title>BarcodeGen</title>
 
     <link rel='manifest' href='/BarcodeGen/manifest.webmanifest'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 </head>
 
 <body class="text-center">
@@ -100,6 +100,27 @@
 
         function isHankaku(value) {
             return !value.match(/[^\x01-\x7E]/) || !value.match(/[^\uFF65-\uFF9F]/);
+        }
+    </script>
+    <script>
+        // This is the "Offline page" service worker
+
+        // Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
+
+        // Check compatibility for the browser we're running this in
+        if ("serviceWorker" in navigator) {
+            if (navigator.serviceWorker.controller) {
+                console.log("[PWA Builder] active service worker found, no need to register");
+            } else {
+                // Register the service worker
+                navigator.serviceWorker
+                    .register("pwabuilder-sw.js", {
+                        scope: "./"
+                    })
+                    .then(function (reg) {
+                        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+                    });
+            }
         }
     </script>
 </body>
