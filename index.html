@@ -31,21 +31,26 @@
     <script src="js/qrious.min.js"></script>
     <script src="js/encoding.min.js"></script>
     <script>
+        const sizeMin = 100, sizeMax = 600, zoomBase = 0.5;
+
         (function () {
-            document.getElementById('data').addEventListener('change', function () {
-                if (isHankaku(document.getElementById('data').value)) {
+            document.getElementById('data').addEventListener('keyup', function () {
+                var hankakuData = document.getElementById('data').value;
+                if (isHankaku(hankakuData)) {
                     var qr = new QRious({
                         element: document.getElementById('qr'),
-                        value: document.getElementById('data').value
+                        size: Math.min(Math.max(sizeMin, zoomBase * hankakuData.length), sizeMax),
+                        value: hankakuData
                     });
                     document.getElementById('download').innerText = 'Download: "' + document.getElementById(
                         'data').value + '"';
                 } else {
                     // from UTF-8 to Shift_JIS
-                    var sjisData = Encoding.convert(document.getElementById('data').value, 'SJIS', 'UTF8');
+                    var sjisData = Encoding.convert(hankakuData, 'SJIS', 'UTF8');
 
                     var qr = new QRious({
                         element: document.getElementById('qr'),
+                        size: Math.min(Math.max(sizeMin, zoomBase * sjisData.length), sizeMax),
                         value: sjisData
                     });
                     document.getElementById('download').innerText = 'Download: "' + document.getElementById(
@@ -59,6 +64,7 @@
 
             var qr = new QRious({
                 element: document.getElementById('qr'),
+                size: sizeMin,
                 value: 'BarcodeGen'
             });
 
