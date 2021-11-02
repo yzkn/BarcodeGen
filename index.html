@@ -62,7 +62,19 @@
                 element: document.getElementById('qr'),
                 value: 'BarcodeGen'
             });
+
+            let queries = get_query();
+            if (queries['data']) {
+                document.getElementById('data').value = queries['data'];
+                let e = new Event('change');
+                document.getElementById('data').dispatchEvent(e);
+            }
         })();
+
+
+        function get_query() {
+            return [...new URLSearchParams(window.location.search).entries()].reduce((obj, e) => ({...obj, [e[0]]: e[1]}), {});
+        }
 
         function saveCanvas(canvas) {
             if (canvas.getContext) {
