@@ -73,7 +73,7 @@
             let queries = get_query();
             if (queries['data']) {
                 document.getElementById('data').value = queries['data'];
-                let e = new Event('change');
+                let e = new Event('keyup');
                 document.getElementById('data').dispatchEvent(e);
             }
         })();
