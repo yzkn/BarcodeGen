@@ -19,8 +19,8 @@
     <main role="main">
         <form class="dataform">
             <label for="data" class="sr-only">Data</label>
-            <input type="text" id="data" class="form-control" placeholder="Data" required autofocus>
-            <input type="text" name="dummy" style="display:none;">
+            <textarea class="form-control" id="data" name="data" placeholder="Data" required autofocus
+                rows="3"></textarea>
         </form>
         <section class="jumbotron text-center">
             <div class="container">
@@ -80,7 +80,7 @@
 
 
         function get_query() {
-            return [...new URLSearchParams(window.location.search).entries()].reduce((obj, e) => ({...obj, [e[0]]: e[1]}), {});
+            return [...new URLSearchParams(window.location.search).entries()].reduce((obj, e) => ({ ...obj, [e[0]]: e[1] }), {});
         }
 
         function saveCanvas(canvas) {
